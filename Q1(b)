@@ -1,0 +1,11 @@
+#To create the annotation.tab file
+curl https://www.staff.hs-mittweida.de/~wuenschi/data/media/compbiolbook/annotation.tab> annotation.tab
+
+#To add headers to the table
+echo -e  "gene function_1 metabolism"> header_1.tab
+cat annotation.tab >> header_1.tab
+cat header_1.tab
+
+#To remove the blank line in the end
+head -n -1 header_1.tab >removingemptyline_1.tab
+cat removingemptyline_1.tab
