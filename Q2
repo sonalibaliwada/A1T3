@@ -1,0 +1,30 @@
+#a) Listing all members (last names, first names, then memberID) who don’t have a coach
+SELECT m.Lastname , m.Firstname, m.memberID
+    -> FROM Member m
+    -> WHERE m.Coach IS NULL;
+
+
+#b) Listing all members (last names, first names, then memberID) who joined during the 2013 calendar year. 
+SELECT m.Lastname, m.Firstname, m.memberID
+    -> FROM Member m
+    -> WHERE Year(m.JoinDate)=2013;
+
+
+#c) Finding the member names and IDs of those who didn’t compete in any tournaments in 2013, but have competed in other years 
+SELECT DISTINCT m.LastName, m.FirstName, m.MemberID
+    -> FROM Member m JOIN Entry e
+    -> ON m.MemberID = e.MemberID
+    -> WHERE NOT EXISTS
+    -> (SELECT * FROM Entry e WHERE m.MemberID = e.MemberID AND e.Year = 2013);
+
+
+#d) Finding the member names and IDs of those who have competed in every year that club members have competed. 
+SELECT DISTINCT m.LastName, m.FirstName, m.MemberID 
+    -> FROM Entry e JOIN Member m 
+    -> ON e.MemberID = m.MemberID 
+    -> WHERE EXISTS
+    -> (SELECT * FROM Entry e WHERE e.MemberID = m.MemberID AND e.Year = 2013) 
+    -> AND EXISTS
+    -> (SELECT * FROM Entry e WHERE e.MemberID = m.MemberID AND e.Year = 2014)
+    -> AND EXISTS
+    -> (SELECT * FROM Entry e WHERE e.MemberID = m.MemberID AND e.Year = 2015);
