@@ -12,10 +12,10 @@ SELECT m.Lastname, m.Firstname, m.memberID
 
 #c) Finding the member names and IDs of those who didn’t compete in any tournaments in 2013, but have competed in other years 
 SELECT DISTINCT m.LastName, m.FirstName, m.MemberID
-    -> FROM Member m JOIN Entry e
-    -> ON m.MemberID = e.MemberID
+    -> FROM Member m, Entry e
     -> WHERE NOT EXISTS
-    -> (SELECT * FROM Entry e WHERE m.MemberID = e.MemberID AND e.Year = 2013);
+    -> (SELECT *FROM Entry e WHERE e.MemberID=m.MemberID AND e.Year=2013)
+    -> AND m.MemberID=e.MemberID;
 
 
 #d) Finding the member names and IDs of those who have competed in every year that club members have competed. 
